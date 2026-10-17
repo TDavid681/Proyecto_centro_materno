@@ -60,42 +60,25 @@ class GestorTramites:
         pass
     #AVANCE 3 SUBIDO POR JOSUE CAYAO
     def consultar(self):
-        # Módulo de Consulta (Parte 3)
-        print("\n=== CONSULTAR TRAMITE ===")
-        
-        if not self.lista_tramites:
-            print("[X] No hay trámites registrados en el sistema.")
+        if len(self.lista_tramites) == 0:
+            print("\n[!] No hay trámites registrados en el sistema.")
             return
-
-        try:
-            codigo_buscado = int(input("Ingrese el codigo de tramite a consultar: "))
-        except ValueError:
-            print("[X] Error: El código debe ser un número entero.")
-            return
-
-        # Buscamos el trámite en la lista
-        tramite_encontrado = None
+            
+        # Mostramos los códigos numéricos existentes para que el usuario sepa qué poner
+        print("\nCódigos numéricos disponibles en el sistema:")
         for t in self.lista_tramites:
-            if t.codigo == codigo_buscado:
-                tramite_encontrado = t
-                break
-
-        # Si se encuentra, mostramos sus datos
-        if tramite_encontrado:
-            print("\n========================================")
-            print("          RESULTADO DE CONSULTA         ")
-            print("========================================")
-            print(f" Codigo de Tramite : {tramite_encontrado.codigo}")
-            print(f" Fecha de Ingreso  : {tramite_encontrado.fecha}")
-            print(f" Solicitante       : {tramite_encontrado.nombre}")
-            print(f" DNI Ciudadano     : {tramite_encontrado.dni}")
-            print(f" Tipo de Tramite   : {tramite_encontrado.tipo}")
-            print(f" Estado Actual     : {tramite_encontrado.estado}")
-            print(f" Area Asignada     : {tramite_encontrado.area}")
-            print("========================================")
+            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}")
+            
+        buscado = int(input("Ingrese el codigo NUMÉRICO a buscar: "))
+        pos = self.buscar_secuencialmente(buscado)
+        
+        if pos != -1:
+            t = self.lista_tramites[pos]
+            print("\n--- TRAMITE ENCONTRADO ---")
+            print(f"Codigo: {t.codigo} | DNI: {t.dni} | Nombre: {t.nombre}")
+            print(f"Tipo: {t.tipo} | Area: {t.area} | Estado: {t.estado}")
         else:
-            print(f"\n[X] No se encontro ningun tramite con el codigo {codigo_buscado}.")
-
+            print("[X] Codigo no encontrado.")
 
     def cambiar_estado(self, rol):
         # TODO: Compañero 4, implementar aquí
