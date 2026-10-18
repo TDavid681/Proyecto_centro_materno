@@ -24,18 +24,23 @@ class GestorTramites:
             return
             
         codigo_num = len(self.lista_tramites) + 1
-        dni = input("Ingrese DNI: ")
-        while dni == "":
-            print("[X] Error: Todos los campos son obligatorios.")
-            dni = input("Ingrese DNI: ")
+        dni = input("Ingrese DNI (8 dígitos obligatorios): ")
+        while len(dni) != 8:
+            print("[X] Error: El DNI debe tener exactamente 8 dígitos.")
+            dni = input("Ingrese DNI (8 dígitos obligatorios): ")
         nombre = input("Ingrese Nombres y Apellidos: ")
         while nombre == "":
             print("[X] Error: Todos los campos son obligatorios.")
             nombre = input("Ingrese Nombres y Apellidos: ")
-        tipo = input("Tipo (ej. Referencia, SIS): ")
+        print("\nTipos de trámite disponibles:")
+        print(f" - Referencia")
+        print(f" - SIS")
+        print(f" - Certificado_Salud")
+        print(f" - Descanso_Medico")
+        tipo = input("Escriba el tipo de trámite de la lista: ")
         while tipo == "":
             print("[X] Error: Todos los campos son obligatorios.")
-            tipo = input("Tipo (ej. Referencia, SIS): ")
+            tipo = input("Escriba el tipo de trámite de la lista: ")
         fecha_actual = datetime.now().strftime("%d/%m/%Y")
         
         nuevo_tramite = Tramite(codigo_num, fecha_actual, tipo, dni, nombre, "Jefatura", "Registrado")
@@ -55,14 +60,30 @@ class GestorTramites:
         print(f" [OK] Tramite {codigo_num} registrado con exito.")
 
     # --- ESPACIOS EN BLANCO PARA LOS COMPAÑEROS ---
-    
     def buscar_secuencialmente(self, cod_buscado):
         # TODO: Compañero 2, implementar aquí
         pass
-
+    #AVANCE 3 SUBIDO POR JOSUE CAYAO
     def consultar(self):
-        # TODO: Compañero 3, implementar aquí
-        print("Módulo de consulta en desarrollo...")
+        if len(self.lista_tramites) == 0:
+            print("\n[!] No hay trámites registrados en el sistema.")
+            return
+            
+        # Mostramos los códigos numéricos existentes para que el usuario sepa qué poner
+        print("\nCódigos numéricos disponibles en el sistema:")
+        for t in self.lista_tramites:
+            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}")
+            
+        buscado = int(input("Ingrese el codigo NUMÉRICO a buscar: "))
+        pos = self.buscar_secuencialmente(buscado)
+        
+        if pos != -1:
+            t = self.lista_tramites[pos]
+            print("\n--- TRAMITE ENCONTRADO ---")
+            print(f"Codigo: {t.codigo} | DNI: {t.dni} | Nombre: {t.nombre}")
+            print(f"Tipo: {t.tipo} | Area: {t.area} | Estado: {t.estado}")
+        else:
+            print("[X] Codigo no encontrado.")
 
     def cambiar_estado(self, rol):
         # TODO: Compañero 4, implementar aquí
