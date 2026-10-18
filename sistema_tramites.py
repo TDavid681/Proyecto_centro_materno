@@ -59,37 +59,51 @@ class GestorTramites:
         print("========================================")
         print(f" [OK] Tramite {codigo_num} registrado con exito.")
 
-    #--- ESPACIOS EN BLANCO PARA LOS COMPAÑEROS ---
+    # --- ESPACIOS EN BLANCO PARA LOS COMPAÑEROS ---
     
     def buscar_secuencialmente(self, cod_buscado):
         # TODO: Compañero 2, implementar aquí
         pass
-    # PARTE 3 FUNCION CONSULTAR , HECHO POR JOSUE CAYAO   
+
     def consultar(self):
-        if len(self.lista_tramites) == 0:
-            print("\n[!] No hay trámites registrados en el sistema.")
-            return
-            
-        # Mostramos los códigos numéricos existentes para que el usuario sepa qué poner
-        print("\nCódigos numéricos disponibles en el sistema:")
-        for t in self.lista_tramites:
-            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}")
-            
-        buscado = int(input("Ingrese el codigo NUMÉRICO a buscar: "))
-        pos = self.buscar_secuencialmente(buscado)
-        
-        if pos != -1:
-            t = self.lista_tramites[pos]
-            print("\n--- TRAMITE ENCONTRADO ---")
-            print(f"Codigo: {t.codigo} | DNI: {t.dni} | Nombre: {t.nombre}")
-            print(f"Tipo: {t.tipo} | Area: {t.area} | Estado: {t.estado}")
-        else:
-            print("[X] Codigo no encontrado.")
+        # AVANCE-3(PARTE-3)SUBIDO-POR-JUHEN
+        print("Módulo de consulta en desarrollo...")
 
     def cambiar_estado(self, rol):
         # TODO: Compañero 4, implementar aquí
         print("Módulo de modificación en desarrollo...")
-
+        if rol != "jefatura":
+            print("\n[X] Acceso denegado: Solo Jefatura puede derivar.")
+            return
+                    
+        if len(self.lista_tramites) == 0:
+            print("\n[!] No hay trámites para modificar.")
+            return
+                    
+        print("\nCódigos numéricos disponibles para modificar:")
+        for t in self.lista_tramites:
+            print(f" -> Código: {t.codigo} | Estado actual: {t.estado} | Área: {t.area}")
+                    
+        actualizar = int(input("Ingrese el codigo NUMÉRICO a modificar: "))
+        pos = self.buscar_secuencialmente(actualizar)
+                
+        if pos != -1:
+            nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
+            while nuevo_estado == "":
+                    print("[X] Error: Todos los campos son obligatorios.")
+                    nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
+                        
+            nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
+            while nueva_area == "":
+                    rint("[X] Error: Todos los campos son obligatorios.")
+                    nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
+                    
+            self.lista_tramites[pos].estado = nuevo_estado
+            self.lista_tramites[pos].area = nueva_area
+            print("\n[OK] Tramite actualizado y derivado correctamente.")
+        else:
+            print("[X] Codigo no encontrado.")
+        
     def reporte_archivo(self):
         # TODO: Compañero 5 , implementar aquí
         print("Módulo de reporte en desarrollo...")
