@@ -66,11 +66,11 @@ class GestorTramites:
         pass
 
     def consultar(self):
-        # AVANCE-3(PARTE-3)SUBIDO-POR-JUHEN
+        # TODO: Compañero 3, implementar aquí
         print("Módulo de consulta en desarrollo...")
 
     def cambiar_estado(self, rol):
-        # TODO: Compañero 4, implementar aquí
+        # AVANCE-3(PARTE 3) SUBIDO-POR-JUHEN
         print("Módulo de modificación en desarrollo...")
         if rol != "jefatura":
             print("\n[X] Acceso denegado: Solo Jefatura puede derivar.")
