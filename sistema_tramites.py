@@ -180,9 +180,15 @@ class GestorTramites:
             print(fila_str)
             if f == 0:
                 print("-" * 75)
-
+   #AVANCE-5(Parte5)SUBIDO POR: Rodrigo Escudero
     def reporte_archivo(self):
-        # TODO: Compañero 5 , implementar aquí
+        print("\n--- REPORTE DE ARCHIVO ---")
+        contador = 0
+        for t in self.lista_tramites:
+            if t.area == "archivo":
+                contador += 1
+                print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} | Estado: {t.estado}")
+        print(f"Total en Archivo: {contador}")
         print("Módulo de reporte en desarrollo...")
 
 # 3. Flujo Principal del Programa 
