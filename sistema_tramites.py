@@ -171,7 +171,6 @@ class GestorTramites:
 
     #AVANCE-4.1(PARTE 4)Subido por: David Dominguez 
     def eliminar(self, rol):
-        # TEMA 3.2: Eliminación
         if rol != "jefatura":
             print("\n[X] Acceso denegado: Solo Jefatura puede eliminar.")
             return
@@ -234,16 +233,38 @@ def main():
         print(" [1] Ventanilla \n [2] Jefatura \n [3] Archivo \n [4] Salir")
         opcion_rol = input("Elija una opcion: ")
         
-        if opcion_rol == "1": rol = "ventanilla"
-        elif opcion_rol == "2": rol = "jefatura"
-        elif opcion_rol == "3": rol = "archivo"
+        if opcion_rol == "1": 
+            intento = input("Ingrese la contraseña de Ventanilla: ")
+            if intento == "1234":
+                rol = "ventanilla"
+                print("\n[🟢] Acceso concedido a Ventanilla.")
+            else:
+                print("\n[🔴] Contraseña incorrecta. Acceso denegado.")
+                continue
+        elif opcion_rol == "2": 
+            intento = input("Ingrese la contraseña de Jefatura: ")
+            if intento == "Jefe2026":
+                rol = "jefatura"
+                print("\n[🟢] Acceso concedido a Jefatura.")
+            else:
+                print("\n[🔴] Contraseña incorrecta. Acceso denegado.")
+                continue
+                
+        elif opcion_rol == "3": 
+            intento = input("Ingrese la contraseña de Archivo: ")
+            if intento == "Admin123":
+                rol = "archivo"
+                print("\n[🟢] Acceso concedido a Archivo.")
+            else:
+                print("\n[🔴] Contraseña incorrecta. Acceso denegado.")
+                continue
+                
         elif opcion_rol == "4":
             print("\nSaliendo del sistema. ¡Hasta luego!") 
             break
         else:
             print("\n[X] Opción inválida. Elija un número del 1 al 4.") 
             continue
-            
         sesion = True
         while sesion:
             print(f"\n--- MENU PRINCIPAL [{rol.upper()}] ---")
