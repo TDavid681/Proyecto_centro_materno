@@ -61,10 +61,10 @@ class GestorTramites:
 
     #Avance - 2 Hecho por Lino
     def buscar_secuencialmente(self, cod_buscado):
-        for i, tramite in enumerate(self.lista_tramites):
-            if tramite.codigo == cod_buscado:
+        for i in range(len(self.lista_tramites)):
+            if self.lista_tramites[i].codigo == cod_buscado:
                 return i
-            return -1
+        return -1
 
     def consultar(self):
          # AVANCE-3(PARTE 1) HECHO POR JOSUE CAYAO   
@@ -89,7 +89,6 @@ class GestorTramites:
 
     def cambiar_estado(self, rol):
         # AVANCE-3(PARTE 2) SUBIDO-POR-JUHEN
-        print("Módulo de modificación en desarrollo...")
         if rol != "jefatura":
             print("\n[X] Acceso denegado: Solo Jefatura puede derivar.")
             return
@@ -98,9 +97,10 @@ class GestorTramites:
             print("\n[!] No hay trámites para modificar.")
             return
                     
-        print("\nCódigos numéricos disponibles para modificar:")
+        print("\n--- CÓDIGOS NUMÉRICOS DISPONIBLES ---")
         for t in self.lista_tramites:
-            print(f" -> Código: {t.codigo} | Estado actual: {t.estado} | Área: {t.area}")
+            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre} | Área: {t.area} | Estado: {t.estado}")
+                   
                     
         actualizar = int(input("Ingrese el codigo NUMÉRICO a modificar: "))
         pos = self.buscar_secuencialmente(actualizar)
@@ -128,7 +128,12 @@ class GestorTramites:
         if rol != "jefatura":
             print("\n[X] Acceso denegado: Solo Jefatura puede eliminar.")
             return
-            
+        if len(self.lista_tramites) == 0:
+            print("\n[!] No hay trámites para eliminar.")
+            return 
+        print("\n--- CÓDIGOS NUMÉRICOS DISPONIBLES ---")
+        for t in self.lista_tramites:
+            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}") 
         cod = int(input("Ingrese el código NUMÉRICO a eliminar: "))
         pos = self.buscar_secuencialmente(cod)
         
@@ -150,6 +155,9 @@ class GestorTramites:
                     self.lista_tramites[j], self.lista_tramites[j + 1] = self.lista_tramites[j + 1], self.lista_tramites[j]
                     
         print("\n[OK] La lista ha sido ordenada alfabéticamente por nombre (Método Burbuja).")
+        print("\n--- LISTA ORDENADA POR NOMBRE ---")
+        for t in self.lista_tramites:
+            print(f" -> Código: {t.codigo} | Nombre: {t.nombre} | Área: {t.area}")
 
     def mostrar_matriz_bidimensional(self):
         if len(self.lista_tramites) == 0:
@@ -213,6 +221,9 @@ def main():
             elif menu == "9": 
                 sesion = False
                 activo = False
+            else:
+                print("\n[X] Opción inválida. Elija un número del 1 al 9.")
+            
 
 if __name__ == "__main__":
     main()
