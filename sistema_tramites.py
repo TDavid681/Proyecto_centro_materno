@@ -20,17 +20,17 @@ class GestorTramites:
     # FUNCIONALIDAD BASE 
     def registrar(self, rol):
         if rol == "archivo":
-            print("\n[X] Acceso denegado.")
+            print("\n[X] Acceso denegado: El personal de Archivo no puede registrar trámites.")
             return
             
         codigo_num = len(self.lista_tramites) + 1
         dni = input("Ingrese DNI (8 dígitos obligatorios): ")
         while len(dni) != 8:
-            print("[X] Error: El DNI debe tener exactamente 8 dígitos.")
+            print("[X] Error: El DNI debe tener exactamente 8 dígitos numéricos.")
             dni = input("Ingrese DNI (8 dígitos obligatorios): ")
         nombre = input("Ingrese Nombres y Apellidos: ")
         while nombre == "":
-            print("[X] Error: Todos los campos son obligatorios.")
+            print("[X] Error: El campo de nombres es obligatorio y no puede estar vacío.")
             nombre = input("Ingrese Nombres y Apellidos: ")
         print("\nTipos de trámite disponibles:")
         print(f" - Referencia")
@@ -39,7 +39,7 @@ class GestorTramites:
         print(f" - Descanso_Medico")
         tipo = input("Escriba el tipo de trámite de la lista: ")
         while tipo == "":
-            print("[X] Error: Todos los campos son obligatorios.")
+            print("[X] Error: El campo de tipo de trámite es obligatorio.")
             tipo = input("Escriba el tipo de trámite de la lista: ")
         fecha_actual = datetime.now().strftime("%d/%m/%Y")
         
@@ -72,7 +72,7 @@ class GestorTramites:
             print("\n[!] No hay trámites registrados en el sistema.")
             return
             
-        print("\nCódigos numéricos disponibles en el sistema:")
+        print("\n--- CÓDIGOS NUMÉRICOS DISPONIBLES ---")
         for t in self.lista_tramites:
             print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}")
             
@@ -90,7 +90,7 @@ class GestorTramites:
     def cambiar_estado(self, rol):
         # AVANCE-3(PARTE 2) SUBIDO-POR-JUHEN
         if rol != "jefatura":
-            print("\n[X] Acceso denegado: Solo Jefatura puede derivar.")
+            print("\n[X] Acceso denegado: Solo Jefatura puede derivar o modificar trámites.")
             return
                     
         if len(self.lista_tramites) == 0:
@@ -108,12 +108,12 @@ class GestorTramites:
         if pos != -1:
             nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
             while nuevo_estado == "":
-                print("[X] Error: Todos los campos son obligatorios.")
+                print("[X] Error: El campo de estado es obligatorio.")
                 nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
                     
             nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
             while nueva_area == "":
-                print("[X] Error: Todos los campos son obligatorios.")
+                print("[X] Error: El campo de área es obligatorio.")
                 nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
                 
             self.lista_tramites[pos].estado = nuevo_estado
