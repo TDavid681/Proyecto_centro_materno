@@ -66,11 +66,29 @@ class GestorTramites:
         pass
 
     def consultar(self):
-        # TODO: Compañero 3, implementar aquí
+         # AVANCE-3(PARTE 1) SUBIDO-POR-JUHEN
         print("Módulo de consulta en desarrollo...")
+          if len(self.lista_tramites) == 0:
+            print("\n[!] No hay trámites registrados en el sistema.")
+            return
+            
+        print("\nCódigos numéricos disponibles en el sistema:")
+        for t in self.lista_tramites:
+            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}")
+            
+        buscado = int(input("Ingrese el codigo NUMÉRICO a buscar: "))
+        pos = self.buscar_secuencialmente(buscado)
+        
+        if pos != -1:
+            t = self.lista_tramites[pos]
+            print("\n--- TRAMITE ENCONTRADO ---")
+            print(f"Codigo: {t.codigo} | DNI: {t.dni} | Nombre: {t.nombre}")
+            print(f"Tipo: {t.tipo} | Area: {t.area} | Estado: {t.estado}")
+        else:
+            print("[X] Codigo no encontrado.")
 
     def cambiar_estado(self, rol):
-        # AVANCE-3(PARTE 3) SUBIDO-POR-JUHEN
+        # AVANCE-3(PARTE 2) SUBIDO-POR-JUHEN
         print("Módulo de modificación en desarrollo...")
         if rol != "jefatura":
             print("\n[X] Acceso denegado: Solo Jefatura puede derivar.")
