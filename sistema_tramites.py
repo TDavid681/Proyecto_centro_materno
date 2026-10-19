@@ -60,10 +60,13 @@ class GestorTramites:
         print(f" [OK] Tramite {codigo_num} registrado con exito.")
 
     # --- ESPACIOS EN BLANCO PARA LOS COMPAÑEROS ---
-    
+    #Avance - 2 Hecho por Lino
     def buscar_secuencialmente(self, cod_buscado):
-        # TODO: Compañero 2, implementar aquí
-        pass
+        #TEMA 2.3: Búsqueda 
+        for i, tramite in enumerate(self.lista_tramites):
+            if tramite.codigo == cod_buscado:
+                return i
+            return -1
 
     def consultar(self):
          # AVANCE-3(PARTE 1) HECHO POR JOSUE CAYAO   
