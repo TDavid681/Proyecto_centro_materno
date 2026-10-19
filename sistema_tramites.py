@@ -34,15 +34,32 @@ class GestorTramites:
         while nombre == "":
             print("[X] Error: El campo de nombres es obligatorio y no puede estar vacío.")
             nombre = input("Ingrese Nombres y Apellidos: ")
-        print("\nTipos de trámite disponibles:")
-        print(f" - Referencia")
-        print(f" - SIS")
-        print(f" - Certificado_Salud")
-        print(f" - Descanso_Medico")
-        tipo = input("Escriba el tipo de trámite de la lista: ")
-        while tipo == "":
-            print("[X] Error: El campo de tipo de trámite es obligatorio.")
-            tipo = input("Escriba el tipo de trámite de la lista: ")
+        tipo = ""
+        while tipo != "Referencia" and tipo != "SIS" and tipo != "Certificado_Salud" and tipo != "Descanso_Medico":
+            print("\nTipos de trámite disponibles:")
+            print(f" 1. Referencia")
+            print(f" 2. SIS")
+            print(f" 3. Certificado_Salud")
+            print(f" 4. Descanso_Medico")
+            entrada = input("Escriba el tipo de trámite de la lista(1-4): ")
+            if entrada == "1":
+                tipo = "Referencia"
+            elif entrada == "2":
+                tipo = "SIS"
+            elif entrada == "3":
+                tipo = "Certificado_Salud"
+            elif entrada == "4":
+                tipo = "Descanso_Medico"
+            else:
+                print("[X] Error: Tipo de trámite inválido o vacío. Intente nuevamente.")
+        requisitos = input("\n¿El ciudadano cumple con todos los requisitos? (si/no): ")
+        while requisitos != "si" and requisitos != "no":
+            print("[X] Error: Responda únicamente 'si' o 'no' (en minúsculas).")
+            requisitos = input("¿El ciudadano cumple con todos los requisitos? (si/no): ")
+        if requisitos == "no":
+            print("\n[!] Registro cancelado: El trámite no puede proceder sin los requisitos completos.")
+            self.contador_codigos -= 1 
+            return
         fecha_actual = datetime.now().strftime("%d/%m/%Y")
         
         nuevo_tramite = Tramite(codigo_num, fecha_actual, tipo, dni, nombre, "Jefatura", "Registrado")
@@ -74,9 +91,9 @@ class GestorTramites:
             print("\n[!] No hay trámites registrados en el sistema.")
             return
             
-        print("\n--- CÓDIGOS NUMÉRICOS DISPONIBLES ---")
-        for t in self.lista_tramites:
-            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}")
+        self.ordenar_por_nombre_burbuja()
+        self.mostrar_matriz_bidimensional()
+        
             
         buscado = int(input("Ingrese el codigo NUMÉRICO a buscar: "))
         pos = self.buscar_secuencialmente(buscado)
@@ -99,25 +116,48 @@ class GestorTramites:
             print("\n[!] No hay trámites para modificar.")
             return
                     
-        print("\n--- CÓDIGOS NUMÉRICOS DISPONIBLES ---")
-        for t in self.lista_tramites:
-            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre} | Área: {t.area} | Estado: {t.estado}")
+        self.ordenar_por_nombre_burbuja()
+        self.mostrar_matriz_bidimensional()
                    
                     
         actualizar = int(input("Ingrese el codigo NUMÉRICO a modificar: "))
         pos = self.buscar_secuencialmente(actualizar)
                 
         if pos != -1:
-            nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
-            while nuevo_estado == "":
-                print("[X] Error: El campo de estado es obligatorio.")
-                nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
+            nuevo_estado = ""
+            while nuevo_estado != "En evaluacion" and nuevo_estado != "Denegado" and nuevo_estado != "Aprobado":
+                print("\nEstados disponibles:")
+                print(f" 1. En evaluacion")
+                print(f" 2. Denegado")
+                print(f" 3. Aprobado")
+                entrada_estado = input("Escriba el número del estado para el trámite (1-3): ")
+                if entrada_estado == "1":
+                    nuevo_estado = "En evaluacion"
+                elif entrada_estado == "2":
+                    nuevo_estado = "Denegado"
+                elif entrada_estado == "3":
+                    nuevo_estado = "Aprobado"
+                else:
+                    print("[X] Error: Estado inválido o vacío. Intente nuevamente.")
+            nueva_area = ""
+            while nueva_area != "Archivo" and nueva_area != "Medico Jefe" and nueva_area != "Diris Lima norte" and nueva_area != "Hospital Referencia":
+                print("\nAreas disponibles:")
+                print(f" 1. Archivo")
+                print(f" 2. Medico Jefe")
+                print(f" 3. Diris Lima norte")
+                print(f" 4. Hospital Referencia")
+                entrada_area = input("Escriba el número del área para derivar el trámite (1-4): ")
+                if entrada_area == "1":
+                    nueva_area = "Archivo"
+                elif entrada_area == "2":
+                    nueva_area = "Medico Jefe"
+                elif entrada_area == "3":
+                    nueva_area = "Diris Lima norte"
+                elif entrada_area == "4":
+                    nueva_area = "Hospital Referencia"
+                else:
+                    print("[X] Error: Área inválida o vacía. Intente nuevamente.")
                     
-            nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
-            while nueva_area == "":
-                print("[X] Error: El campo de área es obligatorio.")
-                nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
-                
             self.lista_tramites[pos].estado = nuevo_estado
             self.lista_tramites[pos].area = nueva_area
             print("\n[OK] Tramite actualizado y derivado correctamente.")
@@ -133,9 +173,8 @@ class GestorTramites:
         if len(self.lista_tramites) == 0:
             print("\n[!] No hay trámites para eliminar.")
             return 
-        print("\n--- CÓDIGOS NUMÉRICOS DISPONIBLES ---")
-        for t in self.lista_tramites:
-            print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}") 
+        self.ordenar_por_nombre_burbuja()
+        self.mostrar_matriz_bidimensional()
         cod = int(input("Ingrese el código NUMÉRICO a eliminar: "))
         pos = self.buscar_secuencialmente(cod)
         
@@ -147,37 +186,25 @@ class GestorTramites:
 
     def ordenar_por_nombre_burbuja(self):
         n = len(self.lista_tramites)
-        if n == 0:
-            print("\n[!] No hay trámites para ordenar.")
-            return
-            
         for i in range(n - 1):
             for j in range(n - 1 - i):
                 if self.lista_tramites[j].nombre > self.lista_tramites[j + 1].nombre:
                     self.lista_tramites[j], self.lista_tramites[j + 1] = self.lista_tramites[j + 1], self.lista_tramites[j]
-                    
-        print("\n[OK] La lista ha sido ordenada alfabéticamente por nombre (Método Burbuja).")
-        print("\n--- LISTA ORDENADA POR NOMBRE ---")
-        for t in self.lista_tramites:
-            print(f" -> Código: {t.codigo} | Nombre: {t.nombre} | Área: {t.area}")
 
     def mostrar_matriz_bidimensional(self):
         if len(self.lista_tramites) == 0:
-            print("\n[!] No hay trámites para mostrar en la matriz.")
+            print("\n[!] No hay trámites registrados para mostrar.")
             return
-            
-        matriz = [["CÓDIGO", "DNI", "NOMBRE", "ÁREA", "ESTADO"]]
+        matriz = [["CÓDIGO", "DNI", "NOMBRE", "ÁREA", "ESTADO", "TIPO"]]
         
         for t in self.lista_tramites:
-            fila = [t.codigo, t.dni, t.nombre, t.area, t.estado]
+            fila = [t.codigo, t.dni, t.nombre, t.area, t.estado,t.tipo]
             matriz.append(fila)
             
-        print("\n--- MATRIZ BIDIMENSIONAL DE TRÁMITES ---")
-       
+        print("\n--- TRÁMITES DISPONIBLES ---")
         for f in range(len(matriz)):
             fila_str = ""
             for c in range(len(matriz[f])):
-                
                 fila_str += f"{str(matriz[f][c]):<15}" 
             print(fila_str)
             if f == 0:
@@ -187,9 +214,9 @@ class GestorTramites:
         print("\n--- REPORTE DE ARCHIVO ---")
         contador = 0
         for t in self.lista_tramites:
-            if t.area == "archivo":
+            if t.area == "Archivo":
                 contador += 1
-                print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} | Estado: {t.estado}")
+                print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} | Estado: {t.estado} | Tipo: {t.tipo}")
         print(f"Total en Archivo: {contador}")
 
 # 3. Flujo Principal del Programa 
@@ -216,26 +243,23 @@ def main():
         while sesion:
             print(f"\n--- MENU PRINCIPAL [{rol.upper()}] ---")
             print(" 1. Registrar \n 2. Consultar \n 3. Modificar (Solo Jefatura) \n 4. Eliminar (Solo Jefatura)")
-            print(" 5. Ordenar por Nombre (Burbuja) \n 6. Ver Matriz Bidimensional")
-            print(" 7. Reporte Archivo \n 8. Cerrar sesion \n 9. Apagar sistema")
+            print(" 5. Reporte Archivo \n 6. Mostrar Trámites \n 7. Cerrar sesion \n 8. Apagar sistema")
             
-            menu = input("Elija (1-9): ")
+            menu = input("Elija (1-8): ")
             
             if menu == "1": gestor.registrar(rol)
             elif menu == "2": gestor.consultar()
             elif menu == "3": gestor.cambiar_estado(rol)
             elif menu == "4": gestor.eliminar(rol)
-            elif menu == "5": gestor.ordenar_por_nombre_burbuja()
+            elif menu == "5": gestor.reporte_archivo()
             elif menu == "6": gestor.mostrar_matriz_bidimensional()
-            elif menu == "7": gestor.reporte_archivo()
-            elif menu == "8": sesion = False
-            elif menu == "9":
+            elif menu == "7": sesion = False
+            elif menu == "8":
                 print("\n[i] Apagando el sistema por completo.") 
                 sesion = False
                 activo = False
             else:
-                print("\n[X] Opción inválida. Elija un número del 1 al 9.")
-            
-
+                print("\n[X] Opción inválida. Elija un número del 1 al 8.")
+                
 if __name__ == "__main__":
     main()
