@@ -59,7 +59,6 @@ class GestorTramites:
         print("========================================")
         print(f" [OK] Tramite {codigo_num} registrado con exito.")
 
-    # --- ESPACIOS EN BLANCO PARA LOS COMPAÑEROS ---
     #Avance - 2 Hecho por Lino
     def buscar_secuencialmente(self, cod_buscado):
         for i, tramite in enumerate(self.lista_tramites):
@@ -69,7 +68,6 @@ class GestorTramites:
 
     def consultar(self):
          # AVANCE-3(PARTE 1) HECHO POR JOSUE CAYAO   
-        print("Módulo de consulta en desarrollo...")
         if len(self.lista_tramites) == 0:
             print("\n[!] No hay trámites registrados en el sistema.")
             return
