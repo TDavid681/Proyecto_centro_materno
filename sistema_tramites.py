@@ -15,7 +15,8 @@ class Tramite:
 # 2. Definición del Gestor
 class GestorTramites:
     def __init__(self):
-        self.lista_tramites = [] 
+        self.lista_tramites = []
+        self.contador_codigos = 1 
 
     # FUNCIONALIDAD BASE 
     def registrar(self, rol):
@@ -23,7 +24,8 @@ class GestorTramites:
             print("\n[X] Acceso denegado: El personal de Archivo no puede registrar trámites.")
             return
             
-        codigo_num = len(self.lista_tramites) + 1
+        codigo_num = self.contador_codigos
+        self.contador_codigos += 1
         dni = input("Ingrese DNI (8 dígitos obligatorios): ")
         while len(dni) != 8:
             print("[X] Error: El DNI debe tener exactamente 8 dígitos numéricos.")
