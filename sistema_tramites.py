@@ -189,7 +189,6 @@ class GestorTramites:
                 contador += 1
                 print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} | Estado: {t.estado}")
         print(f"Total en Archivo: {contador}")
-        print("Módulo de reporte en desarrollo...")
 
 # 3. Flujo Principal del Programa 
 def main():
