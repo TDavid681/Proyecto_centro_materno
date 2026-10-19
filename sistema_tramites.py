@@ -3,12 +3,13 @@ from datetime import datetime
 
 # 1. Definición del Molde
 class Tramite:
-    def __init__(self, codigo, fecha, tipo, dni, nombre, area, estado):
+    def __init__(self, codigo, fecha, tipo, dni, nombre, apellido, area, estado):
         self.codigo = codigo
         self.fecha = fecha
         self.tipo = tipo
         self.dni = dni
         self.nombre = nombre
+        self.apellido = apellido
         self.area = area
         self.estado = estado
 
@@ -30,10 +31,14 @@ class GestorTramites:
         while len(dni) != 8:
             print("[X] Error: El DNI debe tener exactamente 8 dígitos numéricos.")
             dni = input("Ingrese DNI (8 dígitos obligatorios): ")
-        nombre = input("Ingrese Nombres y Apellidos: ")
+        nombre = input("Ingrese Nombres: ")
         while nombre == "":
             print("[X] Error: El campo de nombres es obligatorio y no puede estar vacío.")
-            nombre = input("Ingrese Nombres y Apellidos: ")
+            nombre = input("Ingrese Nombres: ")
+        apellido = input("Ingrese Apellidos: ")
+        while apellido == "":
+            print("[X] Error: El campo de apellidos es obligatorio y no puede estar vacío.")
+            apellido = input("Ingrese Apellidos: ")
         tipo = ""
         while tipo != "Referencia" and tipo != "SIS" and tipo != "Certificado_Salud" and tipo != "Descanso_Medico":
             print("\nTipos de trámite disponibles:")
@@ -62,14 +67,14 @@ class GestorTramites:
             return
         fecha_actual = datetime.now().strftime("%d/%m/%Y")
         
-        nuevo_tramite = Tramite(codigo_num, fecha_actual, tipo, dni, nombre, "Jefatura", "Registrado")
+        nuevo_tramite = Tramite(codigo_num, fecha_actual, tipo, dni, nombre, apellido, "Jefatura", "Registrado")
         self.lista_tramites.append(nuevo_tramite)
         print("\n========================================")
         print("          CARGO DE RECEPCION            ")
         print("========================================")
         print(f" Codigo de Tramite : {codigo_num}")
         print(f" Fecha de Ingreso  : {fecha_actual}")
-        print(f" Solicitante       : {nombre}")
+        print(f" Solicitante       : {nombre} {apellido}")
         print(f" DNI Ciudadano     : {dni}")
         print(f" Tipo de Tramite   : {tipo}")
         print(f" Estado Actual     : Registrado")
@@ -101,7 +106,7 @@ class GestorTramites:
         if pos != -1:
             t = self.lista_tramites[pos]
             print("\n--- TRAMITE ENCONTRADO ---")
-            print(f"Codigo: {t.codigo} | DNI: {t.dni} | Nombre: {t.nombre}")
+            print(f"Codigo: {t.codigo} | DNI: {t.dni} | Nombre: {t.nombre} {t.apellido}")
             print(f"Tipo: {t.tipo} | Area: {t.area} | Estado: {t.estado}")
         else:
             print("[X] Codigo no encontrado.")
@@ -195,20 +200,20 @@ class GestorTramites:
         if len(self.lista_tramites) == 0:
             print("\n[!] No hay trámites registrados para mostrar.")
             return
-        matriz = [["CÓDIGO", "DNI", "NOMBRE", "ÁREA", "ESTADO", "TIPO"]]
+        matriz = [["CÓDIGO", "DNI", "NOMBRE","APELLIDO", "ÁREA", "ESTADO", "TIPO"]]
         
         for t in self.lista_tramites:
-            fila = [t.codigo, t.dni, t.nombre, t.area, t.estado,t.tipo]
+            fila = [t.codigo, t.dni, f"{t.nombre}", f"{t.apellido}", t.area, t.estado,t.tipo]
             matriz.append(fila)
             
         print("\n--- TRÁMITES DISPONIBLES ---")
         for f in range(len(matriz)):
             fila_str = ""
             for c in range(len(matriz[f])):
-                fila_str += f"{str(matriz[f][c]):<15}" 
+                fila_str += f"{str(matriz[f][c]):<20}" 
             print(fila_str)
             if f == 0:
-                print("-" * 75)
+                print("-" * 140)
    #AVANCE-5(Parte5)SUBIDO POR: Rodrigo Escudero
     def reporte_archivo(self):
         print("\n--- REPORTE DE ARCHIVO ---")
@@ -216,7 +221,7 @@ class GestorTramites:
         for t in self.lista_tramites:
             if t.area == "Archivo":
                 contador += 1
-                print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} | Estado: {t.estado} | Tipo: {t.tipo}")
+                print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} {t.apellido} | Estado: {t.estado} | Tipo: {t.tipo}")
         print(f"Total en Archivo: {contador}")
 
 # 3. Flujo Principal del Programa 
