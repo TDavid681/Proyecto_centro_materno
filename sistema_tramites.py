@@ -66,9 +66,9 @@ class GestorTramites:
         pass
 
     def consultar(self):
-         # AVANCE-3(PARTE 1) SUBIDO-POR-JUHEN
+         # AVANCE-3(PARTE 1) HECHO POR JOSUE CAYAO   
         print("Módulo de consulta en desarrollo...")
-          if len(self.lista_tramites) == 0:
+        if len(self.lista_tramites) == 0:
             print("\n[!] No hay trámites registrados en el sistema.")
             return
             
@@ -108,20 +108,76 @@ class GestorTramites:
         if pos != -1:
             nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
             while nuevo_estado == "":
-                    print("[X] Error: Todos los campos son obligatorios.")
-                    nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
-                        
+                print("[X] Error: Todos los campos son obligatorios.")
+                nuevo_estado = input("Escriba el nuevo estado (ej. Atendido, Observado): ")
+                    
             nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
             while nueva_area == "":
-                    rint("[X] Error: Todos los campos son obligatorios.")
-                    nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
-                    
+                print("[X] Error: Todos los campos son obligatorios.")
+                nueva_area = input("Escriba la nueva area (ej. Archivo, Medicos): ")
+                
             self.lista_tramites[pos].estado = nuevo_estado
             self.lista_tramites[pos].area = nueva_area
             print("\n[OK] Tramite actualizado y derivado correctamente.")
         else:
             print("[X] Codigo no encontrado.")
+
+    #AVANCE-4.1(PARTE 4)Subido por: David Dominguez 
+    def eliminar(self, rol):
+        # TEMA 3.2: Eliminación
+        if rol != "jefatura":
+            print("\n[X] Acceso denegado: Solo Jefatura puede eliminar.")
+            return
+            
+        cod = int(input("Ingrese el código NUMÉRICO a eliminar: "))
+        pos = self.buscar_secuencialmente(cod)
         
+        if pos != -1:
+            tramite_eliminado = self.lista_tramites.pop(pos)
+            print(f"\n[OK] Trámite {tramite_eliminado.codigo} de '{tramite_eliminado.nombre}' eliminado correctamente.")
+        else:
+            print("[X] Código no encontrado.")
+
+    def ordenar_por_nombre_burbuja(self):
+        # TEMA 3.3: Algoritmo de ordenamiento (Burbuja)
+        n = len(self.lista_tramites)
+        if n == 0:
+            print("\n[!] No hay trámites para ordenar.")
+            return
+            
+        for i in range(n - 1):
+            for j in range(n - 1 - i):
+                # Comparamos alfabéticamente los nombres
+                if self.lista_tramites[j].nombre > self.lista_tramites[j + 1].nombre:
+                    # Intercambio de objetos
+                    self.lista_tramites[j], self.lista_tramites[j + 1] = self.lista_tramites[j + 1], self.lista_tramites[j]
+                    
+        print("\n[OK] La lista ha sido ordenada alfabéticamente por nombre (Método Burbuja).")
+
+    def mostrar_matriz_bidimensional(self):
+        # TEMA 3.1: Declaración y recorrido de arreglos bidimensionales
+        if len(self.lista_tramites) == 0:
+            print("\n[!] No hay trámites para mostrar en la matriz.")
+            return
+            
+        # 1. Creación e inicialización del arreglo bidimensional (Matriz)
+        matriz = [["CÓDIGO", "DNI", "NOMBRE", "ÁREA", "ESTADO"]]
+        
+        for t in self.lista_tramites:
+            fila = [t.codigo, t.dni, t.nombre, t.area, t.estado]
+            matriz.append(fila)
+            
+        print("\n--- MATRIZ BIDIMENSIONAL DE TRÁMITES ---")
+        # 2. Recorrido de la matriz bidimensional usando índices anidados
+        for f in range(len(matriz)):
+            fila_str = ""
+            for c in range(len(matriz[f])):
+                # Formateamos con espacios para que se vea como tabla
+                fila_str += f"{str(matriz[f][c]):<15}" 
+            print(fila_str)
+            if f == 0:
+                print("-" * 75)
+
     def reporte_archivo(self):
         # TODO: Compañero 5 , implementar aquí
         print("Módulo de reporte en desarrollo...")
@@ -132,7 +188,7 @@ def main():
     
     activo = True
     while activo:
-        print("\n=== AUTENTICACION ===")
+        print("\n=== SISTEMA DE TRÁMITES ===")
         print(" [1] Ventanilla \n [2] Jefatura \n [3] Archivo \n [4] Salir")
         opcion_rol = input("Elija una opcion: ")
         
@@ -145,17 +201,21 @@ def main():
         sesion = True
         while sesion:
             print(f"\n--- MENU PRINCIPAL [{rol.upper()}] ---")
-            print(" 1. Registrar \n 2. Consultar \n 3. Modificar (Solo Jefatura)")
-            print(" 4. Reporte Archivo \n 5. Cerrar sesion \n 6. Apagar sistema")
+            print(" 1. Registrar \n 2. Consultar \n 3. Modificar (Solo Jefatura) \n 4. Eliminar (Solo Jefatura)")
+            print(" 5. Ordenar por Nombre (Burbuja) \n 6. Ver Matriz Bidimensional")
+            print(" 7. Reporte Archivo \n 8. Cerrar sesion \n 9. Apagar sistema")
             
-            menu = input("Elija (1-6): ")
+            menu = input("Elija (1-9): ")
             
             if menu == "1": gestor.registrar(rol)
             elif menu == "2": gestor.consultar()
             elif menu == "3": gestor.cambiar_estado(rol)
-            elif menu == "4": gestor.reporte_archivo()
-            elif menu == "5": sesion = False
-            elif menu == "6": 
+            elif menu == "4": gestor.eliminar(rol)
+            elif menu == "5": gestor.ordenar_por_nombre_burbuja()
+            elif menu == "6": gestor.mostrar_matriz_bidimensional()
+            elif menu == "7": gestor.reporte_archivo()
+            elif menu == "8": sesion = False
+            elif menu == "9": 
                 sesion = False
                 activo = False
 
