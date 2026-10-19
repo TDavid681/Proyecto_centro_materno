@@ -62,7 +62,6 @@ class GestorTramites:
     # --- ESPACIOS EN BLANCO PARA LOS COMPAÑEROS ---
     #Avance - 2 Hecho por Lino
     def buscar_secuencialmente(self, cod_buscado):
-        #TEMA 2.3: Búsqueda 
         for i, tramite in enumerate(self.lista_tramites):
             if tramite.codigo == cod_buscado:
                 return i
@@ -142,7 +141,6 @@ class GestorTramites:
             print("[X] Código no encontrado.")
 
     def ordenar_por_nombre_burbuja(self):
-        # TEMA 3.3: Algoritmo de ordenamiento (Burbuja)
         n = len(self.lista_tramites)
         if n == 0:
             print("\n[!] No hay trámites para ordenar.")
@@ -150,20 +148,16 @@ class GestorTramites:
             
         for i in range(n - 1):
             for j in range(n - 1 - i):
-                # Comparamos alfabéticamente los nombres
                 if self.lista_tramites[j].nombre > self.lista_tramites[j + 1].nombre:
-                    # Intercambio de objetos
                     self.lista_tramites[j], self.lista_tramites[j + 1] = self.lista_tramites[j + 1], self.lista_tramites[j]
                     
         print("\n[OK] La lista ha sido ordenada alfabéticamente por nombre (Método Burbuja).")
 
     def mostrar_matriz_bidimensional(self):
-        # TEMA 3.1: Declaración y recorrido de arreglos bidimensionales
         if len(self.lista_tramites) == 0:
             print("\n[!] No hay trámites para mostrar en la matriz.")
             return
             
-        # 1. Creación e inicialización del arreglo bidimensional (Matriz)
         matriz = [["CÓDIGO", "DNI", "NOMBRE", "ÁREA", "ESTADO"]]
         
         for t in self.lista_tramites:
@@ -171,11 +165,11 @@ class GestorTramites:
             matriz.append(fila)
             
         print("\n--- MATRIZ BIDIMENSIONAL DE TRÁMITES ---")
-        # 2. Recorrido de la matriz bidimensional usando índices anidados
+       
         for f in range(len(matriz)):
             fila_str = ""
             for c in range(len(matriz[f])):
-                # Formateamos con espacios para que se vea como tabla
+                
                 fila_str += f"{str(matriz[f][c]):<15}" 
             print(fila_str)
             if f == 0:
