@@ -198,8 +198,12 @@ def main():
         if opcion_rol == "1": rol = "ventanilla"
         elif opcion_rol == "2": rol = "jefatura"
         elif opcion_rol == "3": rol = "archivo"
-        elif opcion_rol == "4": break
-        else: continue
+        elif opcion_rol == "4":
+            print("\nSaliendo del sistema. ¡Hasta luego!") 
+            break
+        else:
+            print("\n[X] Opción inválida. Elija un número del 1 al 4.") 
+            continue
             
         sesion = True
         while sesion:
@@ -218,7 +222,8 @@ def main():
             elif menu == "6": gestor.mostrar_matriz_bidimensional()
             elif menu == "7": gestor.reporte_archivo()
             elif menu == "8": sesion = False
-            elif menu == "9": 
+            elif menu == "9":
+                print("\n[i] Apagando el sistema por completo.") 
                 sesion = False
                 activo = False
             else:
