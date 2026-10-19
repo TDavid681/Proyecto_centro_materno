@@ -192,7 +192,7 @@ class GestorTramites:
         n = len(self.lista_tramites)
         for i in range(n - 1):
             for j in range(n - 1 - i):
-                if self.lista_tramites[j].nombre > self.lista_tramites[j + 1].nombre:
+                if (self.lista_tramites[j].apellido > self.lista_tramites[j + 1].apellido or (self.lista_tramites[j].apellido == self.lista_tramites[j + 1].apellido and self.lista_tramites[j].nombre > self.lista_tramites[j + 1].nombre)):
                     self.lista_tramites[j], self.lista_tramites[j + 1] = self.lista_tramites[j + 1], self.lista_tramites[j]
 
     def mostrar_matriz_bidimensional(self):
