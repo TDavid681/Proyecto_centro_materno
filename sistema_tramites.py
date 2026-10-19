@@ -59,19 +59,18 @@ class GestorTramites:
         print("========================================")
         print(f" [OK] Tramite {codigo_num} registrado con exito.")
 
-    # --- ESPACIOS EN BLANCO PARA LOS COMPAÑEROS ---
+    #--- ESPACIOS EN BLANCO PARA LOS COMPAÑEROS ---
     
     def buscar_secuencialmente(self, cod_buscado):
         # TODO: Compañero 2, implementar aquí
         pass
-
+    # PARTE 3 FUNCION CONSULTAR , HECHO POR JOSUE CAYAO   
     def consultar(self):
-         # AVANCE-3(PARTE 1) SUBIDO-POR-JUHEN
-        print("Módulo de consulta en desarrollo...")
-          if len(self.lista_tramites) == 0:
+        if len(self.lista_tramites) == 0:
             print("\n[!] No hay trámites registrados en el sistema.")
             return
             
+        # Mostramos los códigos numéricos existentes para que el usuario sepa qué poner
         print("\nCódigos numéricos disponibles en el sistema:")
         for t in self.lista_tramites:
             print(f" -> Código: {t.codigo} | Solicitante: {t.nombre}")
@@ -88,7 +87,8 @@ class GestorTramites:
             print("[X] Codigo no encontrado.")
 
     def cambiar_estado(self, rol):
-        # AVANCE-3(PARTE 2) SUBIDO-POR-JUHEN
+     #AVANCE-3(PARTE-3)SUBIDO-POR-JUHEN
+        print("Módulo de modificación en desarrollo...")
         print("Módulo de modificación en desarrollo...")
         if rol != "jefatura":
             print("\n[X] Acceso denegado: Solo Jefatura puede derivar.")
@@ -122,6 +122,7 @@ class GestorTramites:
         else:
             print("[X] Codigo no encontrado.")
         
+
     def reporte_archivo(self):
         # TODO: Compañero 5 , implementar aquí
         print("Módulo de reporte en desarrollo...")
