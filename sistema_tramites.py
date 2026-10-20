@@ -107,7 +107,7 @@ class GestorTramites:
             t = self.lista_tramites[pos]
             print("\n--- TRAMITE ENCONTRADO ---")
             print(f"Codigo: {t.codigo} | DNI: {t.dni} | Nombre: {t.nombre} {t.apellido}")
-            print(f"Tipo: {t.tipo} | Area: {t.area} | Estado: {t.estado}")
+            print(f"Tipo: {t.tipo} | Area: {t.area} | Estado: {t.estado} | Fecha: {t.fecha}")
         else:
             print("[X] Codigo no encontrado.")
 
@@ -199,10 +199,10 @@ class GestorTramites:
         if len(self.lista_tramites) == 0:
             print("\n[!] No hay trámites registrados para mostrar.")
             return
-        matriz = [["CÓDIGO", "DNI", "NOMBRE","APELLIDO", "ÁREA", "ESTADO", "TIPO"]]
+        matriz = [["CÓDIGO", "DNI", "NOMBRE","APELLIDO", "ÁREA", "ESTADO", "TIPO", "FECHA"]]
         
         for t in self.lista_tramites:
-            fila = [t.codigo, t.dni, f"{t.nombre}", f"{t.apellido}", t.area, t.estado,t.tipo]
+            fila = [t.codigo, t.dni, f"{t.nombre}", f"{t.apellido}", t.area, t.estado,t.tipo, t.fecha]
             matriz.append(fila)
             
         print("\n--- TRÁMITES DISPONIBLES ---")
@@ -212,7 +212,7 @@ class GestorTramites:
                 fila_str += f"{str(matriz[f][c]):<20}" 
             print(fila_str)
             if f == 0:
-                print("-" * 140)
+                print("-" * 160)
    #AVANCE-5(Parte5)SUBIDO POR: Rodrigo Escudero
     def reporte_archivo(self):
         print("\n--- REPORTE DE ARCHIVO ---")
@@ -220,7 +220,7 @@ class GestorTramites:
         for t in self.lista_tramites:
             if t.area == "Archivo":
                 contador += 1
-                print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} {t.apellido} | Estado: {t.estado} | Tipo: {t.tipo}")
+                print(f"Tramite: {t.codigo} | Solicitante: {t.nombre} {t.apellido} | Estado: {t.estado} | Tipo: {t.tipo} | Fecha: {t.fecha}")
         print(f"Total en Archivo: {contador}")
 
 # 3. Flujo Principal del Programa 
