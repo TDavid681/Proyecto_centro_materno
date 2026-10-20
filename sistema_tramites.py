@@ -12,6 +12,33 @@ class Tramite:
         self.apellido = apellido
         self.area = area
         self.estado = estado
+class Autenticador:
+    """Valida la contraseña de cada rol y devuelve el rol asignado."""
+
+    def iniciar_sesion(self, opcion):
+        if opcion == "1":
+            rol = "ventanilla"
+            nombre_rol = "Ventanilla"
+            clave = "1234"
+        elif opcion == "2":
+            rol = "jefatura"
+            nombre_rol = "Jefatura"
+            clave = "Jefe2026"
+        elif opcion == "3":
+            rol = "archivo"
+            nombre_rol = "Archivo"
+            clave = "Admin123"
+        else:
+            return None
+
+        intento = input("Ingrese la contraseña de " + nombre_rol + ": ")
+
+        if intento == clave:
+            print("\n[OK] Acceso concedido a " + nombre_rol + ".")
+            return rol
+
+        print("\n[X] Contraseña incorrecta. Acceso denegado.")
+        return None
 
 # 2. Definición del Gestor
 class GestorTramites:
@@ -226,47 +253,33 @@ class GestorTramites:
 # 3. Flujo Principal del Programa 
 def main():
     gestor = GestorTramites()
-    
+    autenticador = Autenticador()
     activo = True
     while activo:
-        print("\n=== SISTEMA DE TRÁMITES ===")
-        print(" [1] Ventanilla \n [2] Jefatura \n [3] Archivo \n [4] Salir")
-        opcion_rol = input("Elija una opcion: ")
+       print("\n=== SISTEMA DE TRÁMITES ===")
+       print(" [1] Ventanilla")
+       print(" [2] Jefatura")
+       print(" [3] Archivo")
+       print(" [4] Salir")
         
-        if opcion_rol == "1": 
-            intento = input("Ingrese la contraseña de Ventanilla: ")
-            if intento == "1234":
-                rol = "ventanilla"
-                print("\n[🟢] Acceso concedido a Ventanilla.")
-            else:
-                print("\n[🔴] Contraseña incorrecta. Acceso denegado.")
-                continue
-        elif opcion_rol == "2": 
-            intento = input("Ingrese la contraseña de Jefatura: ")
-            if intento == "Jefe2026":
-                rol = "jefatura"
-                print("\n[🟢] Acceso concedido a Jefatura.")
-            else:
-                print("\n[🔴] Contraseña incorrecta. Acceso denegado.")
-                continue
-                
-        elif opcion_rol == "3": 
-            intento = input("Ingrese la contraseña de Archivo: ")
-            if intento == "Admin123":
-                rol = "archivo"
-                print("\n[🟢] Acceso concedido a Archivo.")
-            else:
-                print("\n[🔴] Contraseña incorrecta. Acceso denegado.")
-                continue
-                
-        elif opcion_rol == "4":
-            print("\nSaliendo del sistema. ¡Hasta luego!") 
+       opcion_rol = input("Elija una opcion: ")
+
+       if opcion_rol == "4":
+            print("\nSaliendo del sistema. ¡Hasta luego!")
             break
-        else:
-            print("\n[X] Opción inválida. Elija un número del 1 al 4.") 
+
+       elif opcion_rol == "1" or opcion_rol == "2" or opcion_rol == "3":
+            rol = autenticador.iniciar_sesion(opcion_rol)
+
+            if rol is None:
+                continue
+
+       else:
+            print("\n[X] Opción inválida. Elija un número del 1 al 4.")
             continue
-        sesion = True
-        while sesion:
+
+       sesion = True
+       while sesion:
             print(f"\n--- MENU PRINCIPAL [{rol.upper()}] ---")
             print(" 1. Registrar \n 2. Consultar \n 3. Modificar (Solo Jefatura) \n 4. Eliminar (Solo Jefatura)")
             print(" 5. Reporte Archivo \n 6. Mostrar Trámites \n 7. Cerrar sesion \n 8. Apagar sistema")
@@ -278,7 +291,9 @@ def main():
             elif menu == "3": gestor.cambiar_estado(rol)
             elif menu == "4": gestor.eliminar(rol)
             elif menu == "5": gestor.reporte_archivo()
-            elif menu == "6": gestor.mostrar_matriz_bidimensional()
+            elif menu == "6":
+                gestor.ordenar_por_nombre_burbuja() 
+                gestor.mostrar_matriz_bidimensional()
             elif menu == "7": sesion = False
             elif menu == "8":
                 print("\n[i] Apagando el sistema por completo.") 
